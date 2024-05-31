@@ -2,6 +2,7 @@
 
 ## Description
 These scripts are for processing amplicon sequencing data (16S, 18S, ITS and rbcL) for the EA biofilm project following the [DADA2 workflow](https://benjjneb.github.io/dada2/index.html) and the [diatom DADA2 pipeline](https://github.com/fkeck/DADA2_diatoms_pipeline/).
+A script including preliminary analyses for the 16S dataset is included as an example.
 
 ## R packages
 The `dada2` package can be installed from Bioconductor
