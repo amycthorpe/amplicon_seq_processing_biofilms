@@ -9,7 +9,7 @@ FWD <- "GTGYCAGCMGCCGCGGTAA" # 19 bases
 REV <- "GGACTACNVGGGTWTCTAAT" # 20 bases
 
 # File parsing
-path <- "/home/Data/" # CHANGE ME to the directory containing your demultiplexed fastqs
+path <- "/home/16S/data/" # CHANGE ME to the directory containing your demultiplexed fastqs
 list.files(path)
 
 # Filter and trim
@@ -36,7 +36,7 @@ filtRs <- file.path(filt_path, paste0(sample.names, "_R_filt.fastq.gz"))
 out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=c(19,20), truncLen=c(250,250), maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE, compress=TRUE, multithread=TRUE)
 
 # Check reads out
-write.csv(out, file="/home/output/filtered_out.csv")
+write.csv(out, file="/home/16S/output/filtered_out.csv")
 
 # If some reads do not pass the filter - likely just blanks with low read numbers (check these)
 # Filter to only samples that passed
@@ -84,7 +84,7 @@ rownames(track) <- sample.names
 head(track)
 
 seqtab.nochim_t <- t(seqtab.nochim)
-write.csv(seqtab.nochim_t, file="/home/output/seqtab_16S.csv")
+write.csv(seqtab.nochim_t, file="/home/16S/output/seqtab_16S.csv")
 
 # Assign taxonomy
 taxa <- assignTaxonomy(seqtab.nochim, "/home/training datasets/silva_nr99_v138.1_train_set.fa.gz", multithread=TRUE)
@@ -101,13 +101,13 @@ for (i in 1:dim(seqtab.nochim)[2]) {
 }
 
 asv_fasta <- c(rbind(asv_headers, asv_seqs))
-write(asv_fasta, "/home/output/ASVs_16S_assigntax.fa")
+write(asv_fasta, "/home/16S/output/ASVs_16S_assigntax.fa")
 
 asv_tab <- t(seqtab.nochim)
 row.names(asv_tab) <- sub(">", "", asv_headers)
-write.table(asv_tab, "/home/output/ASVs_counts_16S_assigntax.tsv", sep="\t", quote=F, col.names=NA)
+write.table(asv_tab, "/home/16S/output/ASVs_counts_16S_assigntax.tsv", sep="\t", quote=F, col.names=NA)
 
 rownames(taxa) <- gsub(pattern=">", replacement="", x=asv_headers)
 
-write.table(taxa, "/home/output/ASVs_taxonomy_16S_assigntax.tsv", sep="\t", quote=F, col.names=NA)
+write.table(taxa, "/home/16S/output/ASVs_taxonomy_16S_assigntax.tsv", sep="\t", quote=F, col.names=NA)
 
